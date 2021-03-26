@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>注册</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
+</head>
+<body>
+<div class="simple-page">
+    <div id="login-box">
+        <h1>注册</h1>
+        <div>
+            <label for="username"></label><input type="text" id="username" name="Username" placeholder="用户名">
+            <label for="password"></label><input type="password" onchange="register()" id="password" name="Username" placeholder="密码">
+            <button id="submit" onclick="register()">注册</button>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+  function register() {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    let data = new URLSearchParams();
+    data.append("username", username);
+    data.append("password", password)
+    fetch("/api/register", {
+      method: "POST",
+      body: data
+    }).then(res => {
+      if (res.status !== 200) {
+        let reason = res.headers.get("X-Status-Reason");
+        if (reason === "USERNAME_UNAVAILABLE") {
+          alert("用户名不可用！")
+        } else if (reason === "PASSWORD_TOO_SHORT") {
+          alert("密码过短！")
+        } else {
+          alert("注册失败！")
+        }
+        document.getElementById("password").value = "";
+      } else {
+        window.location.href = "/login.html"
+      }
+    })
+  }
+</script>
+</html>
