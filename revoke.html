@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Anni Library - 注销账户</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/common.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
+</head>
+<body>
+<header class="navbar">
+    <ul class="nav-links">
+        <li class="nav-item"><a href="/">首页</a></li>
+        <li class="nav-item"><a href="/tokenGenerate.html">令牌</a></li>
+        <li class="nav-item"><a href="/changePassword.html">密码</a></li>
+        <li class="nav-item active"><a href="/revoke.html">注销</a></li>
+    </ul>
+</header>
+<main>
+    <div id="center-box">
+        <h1>注销账户</h1>
+        <p>警告：注销账户操作将无法恢复！</p>
+        <button id="warning-btn" onclick="revoke()">我知道风险，注销我的账户！</button>
+    </div>
+</main>
+</body>
+<style>
+    #warning-btn {
+        display: block;
+        margin: auto;
+        background-color: #eb2020 !important;
+        cursor: pointer;
+        color: #ffffff;
+        border-radius: 0.4rem;
+        border-color: rgba(0, 0, 0, 0);
+        padding: 0.5rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+<script>
+  function revoke() {
+    let str = prompt("请输入 '注销我的账户' ，并确认");
+    if (str === "注销我的账户") {
+      fetch("/api/current", {
+        method: "POST"
+      }).then(res => {
+        if (res.status !== 200) {
+          alert("请先登录！")
+          window.location.href = "/login.html";
+        } else {
+          res.text().then(username => {
+            let data = new URLSearchParams();
+            data.append("username", username);
+            fetch("/api/revoke", {
+              method: "POST",
+              body: data
+            }).then(res => {
+              if (res.status === 200) {
+                alert("注销成功！");
+                window.location.href = "/";
+              } else {
+                alert("注销失败！");
+              }
+            })
+          })
+        }
+      })
+    }
+  }
+</script>
+</html>

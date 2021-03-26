@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
     <title>Anni Library</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/common.css" type="text/css">
 </head>
 <body>
-
+<header class="navbar">
+    <ul class="nav-links">
+        <li class="nav-item active"><a href="/">首页</a></li>
+        <li class="nav-item"><a href="/tokenGenerate.html">令牌</a></li>
+        <li class="nav-item"><a href="/changePassword.html">密码</a></li>
+        <li class="nav-item"><a href="/revoke.html">注销</a></li>
+    </ul>
+</header>
+<main>
+    <p>Hello! <span id="username"></span></p>
+</main>
 </body>
+<script>
+  fetch("/api/current", {
+    method: "POST"
+  }).then(res => {
+    console.log(res.status)
+    if (res.status === 200) {
+      res.text().then(text => {
+        document.getElementById("username").innerText = text;
+      });
+    } else {
+      window.location.href = "/login.html";
+    }
+  })
+</script>
 </html>

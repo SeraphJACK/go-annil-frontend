@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>登录</title>
+    <title>Anni Library - 登录</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/common.css" type="text/css">
 </head>
 <body>
 <div class="simple-page">
-    <div id="login-box">
+    <div id="center-box">
         <h1>登录</h1>
         <div>
             <label for="username"></label><input type="text" id="username" name="Username" placeholder="用户名">
             <label for="password"></label><input type="password" onchange="login()" id="password" name="Username" placeholder="密码">
             <button id="submit" onclick="login()">登录</button>
         </div>
+        <p>没有账户？请先<a href="/register.html">注册</a></p>
     </div>
 </div>
 </body>

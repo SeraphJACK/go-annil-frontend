@@ -18,13 +18,12 @@
     min-height: 90vh;
 }
 
-
-#login-box h1 {
+h1 {
     font-size: 24px;
     margin: 0.67rem 0;
 }
 
-#login-box {
+#center-box {
     align-items: center;
     text-align: center;
     min-width: 300px;
@@ -32,7 +31,7 @@
     margin: auto;
 }
 
-#login-box input {
+#center-box input {
     display: block;
     margin: 0 auto 0.5rem;
     font-size: 14px;
@@ -44,7 +43,7 @@
     box-sizing: border-box;
 }
 
-#login-box button {
+#center-box button {
     display: block;
     margin: auto;
     background-color: #3eaf7c;

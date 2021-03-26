@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>Anni Library - 生成令牌</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/common.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
+</head>
+<body>
+<header class="navbar">
+    <ul class="nav-links">
+        <li class="nav-item"><a href="/">首页</a></li>
+        <li class="nav-item active"><a href="/tokenGenerate.html">令牌</a></li>
+        <li class="nav-item"><a href="/changePassword.html">密码</a></li>
+        <li class="nav-item"><a href="/revoke.html">注销</a></li>
+    </ul>
+</header>
+<main>
+    <div id="center-box">
+        <h1>生成令牌</h1>
+        <p class="token" id="token"></p>
+        <p>注意：令牌生成后无法吊销，请妥善保管</p>
+        <button onclick="generateToken()">生成令牌</button>
+    </div>
+</main>
+</body>
+<script>
+  function generateToken() {
+    fetch("/api/generateToken", {
+      method: "POST"
+    }).then(res => {
+      if (res.status !== 200) {
+        alert("请先登录！");
+        window.location.href="/login.html";
+      } else {
+        res.text().then(token => {
+          document.getElementById("token").innerText = token;
+        })
+      }
+    })
+  }
+</script>
+<style>
+    .token {
+        line-break: anywhere;
+    }
+</style>
+</html>
