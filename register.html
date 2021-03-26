@@ -13,6 +13,7 @@
     <div id="center-box">
         <h1>注册</h1>
         <div>
+            <label for="inviteCode"></label><input type="text" id="inviteCode" placeholder="邀请码">
             <label for="username"></label><input type="text" id="username" placeholder="用户名">
             <label for="password"></label><input type="password" id="password" placeholder="密码">
             <label for="confirm"></label><input type="password" onchange="register()" id="confirm" placeholder="确认密码">
@@ -25,6 +26,7 @@
 
 <script>
   function register() {
+    let code = document.getElementById("inviteCode").value;
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     let confirm = document.getElementById("confirm").value;
@@ -35,7 +37,8 @@
     }
     let data = new URLSearchParams();
     data.append("username", username);
-    data.append("password", password)
+    data.append("password", password);
+    data.append("inviteCode", code);
     fetch("/api/register", {
       method: "POST",
       body: data
@@ -44,12 +47,16 @@
         let reason = res.headers.get("X-Status-Reason");
         if (reason === "USERNAME_UNAVAILABLE") {
           alert("用户名不可用！")
+          document.getElementById("username").value = "";
         } else if (reason === "PASSWORD_TOO_SHORT") {
           alert("密码过短！")
+          document.getElementById("password").value = document.getElementById("confirm").value = "";
+        } else if (reason === "INVALID_INVITE_CODE") {
+          alert("邀请码无效！");
+          document.getElementById("inviteCode").value = "";
         } else {
           alert("注册失败！")
         }
-        document.getElementById("password").value = document.getElementById("confirm").value = "";
       } else {
         window.location.href = "/login.html"
       }
